@@ -1,12 +1,20 @@
+import { demo } from '@/lib/demo'
+import { postsStore } from '@/posts'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { UIContainer } from './ui'
+import { UIButton, UIContainer } from './ui'
 
 const Header = observer(function Header() {
   return (
     <HeaderWrap>
       <HeaderContainer as="header">
         <Title>Pulse</Title>
+
+        {postsStore.extractionState === 'none' && (
+          <UIButton $size="sm" $variant="secondary" onClick={demo}>
+            Load Demo
+          </UIButton>
+        )}
       </HeaderContainer>
     </HeaderWrap>
   )
@@ -23,6 +31,8 @@ const HeaderWrap = styled.div`
 const HeaderContainer = styled(UIContainer)`
   height: 100%;
   align-items: center;
+  display: flex;
+  justify-content: space-between;
 `
 
 const Title = styled.h1`

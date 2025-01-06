@@ -79,7 +79,7 @@ export async function fetchSubredditPosts(subreddit: string): Promise<RedditPost
       const posts = response.posts.slice(0, 10)
 
       allPosts.push(...posts)
-      // currAfter = response.after
+      currAfter = response.after
     } while (currAfter)
 
     log('fetchSubredditPosts', { allPosts })
