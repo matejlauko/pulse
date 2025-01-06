@@ -24,6 +24,28 @@ class PostsStore {
     })
   }
 
+  // Sort by Category first (bug->request->question)
+  // Sort by Priority second (urgent->high->normal)
+  get sortedPosts() {
+    return [...this.posts].sort((a, b) => {
+      if (a.category === b.category) {
+        if (a.priority === b.priority) return 0
+
+        if (a.priority === 'urgent') return -1
+        if (a.priority === 'high' && b.priority !== 'urgent') return -1
+        if (a.priority === 'normal' && b.priority !== 'urgent' && b.priority !== 'high') return -1
+
+        return 0
+      }
+
+      if (a.category === 'bug') return -1
+      if (a.category === 'request' && b.category !== 'bug') return -1
+      if (a.category === 'question' && b.category !== 'bug' && b.category !== 'request') return -1
+
+      return 0
+    })
+  }
+
   public *loadPosts(): Generator<Promise<IPost[]>, void, IPost[]> {
     this.extractionState = 'loading'
 
