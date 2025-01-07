@@ -9,11 +9,10 @@ const Content = observer(function Content() {
   const { extractionState } = postsStore
   const { linearApiKey, anthropicApiKey } = rootStore
 
-  if (!linearApiKey || !anthropicApiKey) {
-    return <Settings />
-  }
-
   if (extractionState === 'none') {
+    if (!linearApiKey || !anthropicApiKey) {
+      return <Settings />
+    }
     return <Blank />
   }
 
